@@ -1,0 +1,36 @@
+<h1>가계부 기록</h1>
+
+<table border="1" cellpadding="8">
+    <tr>
+        <th>날짜</th>
+        <th>유형</th>
+        <th>카테고리</th>
+        <th>내용</th>
+        <th>금액</th>
+    </tr>
+
+    {% for r in records %}
+    <tr>
+        <td>{{ r.date }}</td>
+
+        <td>
+            {% if r.record_type == 'income' %}
+                <span style="color: blue;">수입</span>
+            {% else %}
+                <span style="color: red;">지출</span>
+            {% endif %}
+        </td>
+
+        <td>{{ r.category }}</td>
+        <td>{{ r.title }}</td>
+
+        <td>
+            {% if r.record_type == 'income' %}
+                <span style="color: blue;">+{{ r.amount }}원</span>
+            {% else %}
+                <span style="color: red;">-{{ r.amount }}원</span>
+            {% endif %}
+        </td>
+    </tr>
+    {% endfor %}
+</table>
