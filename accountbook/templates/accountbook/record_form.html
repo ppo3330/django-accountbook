@@ -1,0 +1,33 @@
+<h1>새 기록 추가</h1>
+
+<form method = "POST">
+    {% csrf_token %}
+    <label>내용</label>
+    <input type="text" name="title" required>
+
+    <label>금액</label>
+    <input type="number" name="amount" required>
+    
+    <br><label>유형</label>
+    <label><input type="radio" name="record_type" value="income" required> 수입</label>
+    <label><input type="radio" name="record_type" value="expense" required> 지출</label>
+    <br><br>
+
+    <label>카테고리</label>
+    <select name="category" required>
+        <option value="식비">식비</option>
+        <option value="교통">교통</option>
+        <option value="쇼핑">쇼핑</option>
+        <option value="생활">생활</option>
+        <option value="월급">월급</option>
+        <option value="기타">기타</option>
+    </select>
+
+    <label>날짜</label>
+    <input type="date" name="date" required>
+
+    <br><br>
+    <button type="submit">저장</button>
+</form>
+
+<a href="{% url 'record_list' %}">목록으로</a>
