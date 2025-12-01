@@ -25,7 +25,12 @@
         </td>
 
         <td>{{ r.category }}</td>
-        <td>{{ r.title }}</td>
+
+        <td>
+            <a href="{% url 'record_detail' r.pk %}">
+            {{ r.title }}
+            </a>
+        </td>
 
         <td>
             {% if r.record_type == 'income' %}

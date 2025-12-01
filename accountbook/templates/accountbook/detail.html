@@ -1,0 +1,10 @@
+<h2>{{ record.title}}</h2>
+
+<p>
+    금액: {{ record.amount }}원<br>
+    유형: {{ record.get_record_type_display }}<br>
+    카테고리: {{ record.category }}<br>
+    날짜: {{ record.date}}
+</p>
+
+<a href="{% url 'record_list' %}">목록으로</a>"

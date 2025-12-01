@@ -1,4 +1,4 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from .models import Record
 
 def record_list(request):
@@ -26,3 +26,9 @@ def record_create(request):
             )
             return redirect('record_list')
     return render(request, 'accountbook/record_form.html')
+
+def record_detail(request,pk):
+    record = get_object_or_404(Record, pk=pk)
+    return render(request, 'accountbook/detail.html',{
+        'record':record
+    })
