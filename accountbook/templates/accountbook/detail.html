@@ -7,4 +7,9 @@
     날짜: {{ record.date}}
 </p>
 
-<a href="{% url 'record_list' %}">목록으로</a>"
+<a href="{% url 'record_list' %}">목록으로</a>
+<a href="{% url 'record_edit' record.pk %}">수정</a>
+<form action="{% url 'record_delete' record.pk %}" method="POST" style="display:inline;">
+    {% csrf_token %}
+    <button type="submit">삭제</button>
+</form>

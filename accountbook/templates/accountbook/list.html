@@ -1,6 +1,8 @@
 <h1>가계부 기록</h1>
 
 <a href="{% url 'record_create' %}" class="btn btn-primary">새 기록 추가</a>
+
+<a href="{% url 'stats' %}" class="btn btn-secondary">통계 보기</a>
 <br><br>
 
 <table border="1" cellpadding="8">
@@ -41,6 +43,5 @@
         </td>
     </tr>
     {% endfor %}
-
-    
+   
 </table>

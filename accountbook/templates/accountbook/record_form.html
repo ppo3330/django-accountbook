@@ -1,33 +1,52 @@
-<h1>새 기록 추가</h1>
+<h1>
+    {% if record %}기록 수정{% else %}새 기록 추가{% endif %}
+</h1>
 
-<form method = "POST">
+<form method="POST">
     {% csrf_token %}
+
     <label>내용</label>
-    <input type="text" name="title" required>
+    <input type="text" name="title" required
+           value="{{ record.title|default_if_none:'' }}">
 
     <label>금액</label>
-    <input type="number" name="amount" required>
-    
+    <input type="number" name="amount" required
+           value="{{ record.amount|default_if_none:'' }}">
+
     <br><label>유형</label>
-    <label><input type="radio" name="record_type" value="income" required> 수입</label>
-    <label><input type="radio" name="record_type" value="expense" required> 지출</label>
+
+    <label>
+        <input type="radio" name="record_type" value="income"
+            {% if record and record.record_type == "income" %} checked {% endif %}>
+        수입
+    </label>
+
+    <label>
+        <input type="radio" name="record_type" value="expense"
+            {% if record and record.record_type == "expense" %} checked {% endif %}>
+        지출
+    </label>
+
     <br><br>
 
     <label>카테고리</label>
     <select name="category" required>
-        <option value="식비">식비</option>
-        <option value="교통">교통</option>
-        <option value="쇼핑">쇼핑</option>
-        <option value="생활">생활</option>
-        <option value="월급">월급</option>
-        <option value="기타">기타</option>
+        <option value="식비"     {% if record and record.category == "식비" %}selected{% endif %}>식비</option>
+        <option value="교통"     {% if record and record.category == "교통" %}selected{% endif %}>교통</option>
+        <option value="쇼핑"     {% if record and record.category == "쇼핑" %}selected{% endif %}>쇼핑</option>
+        <option value="생활"     {% if record and record.category == "생활" %}selected{% endif %}>생활</option>
+        <option value="월급"     {% if record and record.category == "월급" %}selected{% endif %}>월급</option>
+        <option value="기타"     {% if record and record.category == "기타" %}selected{% endif %}>기타</option>
     </select>
 
     <label>날짜</label>
-    <input type="date" name="date" required>
+    <input type="date" name="date" required
+           value="{% if record %}{{ record.date|date:'Y-m-d' }}{% endif %}">
 
     <br><br>
-    <button type="submit">저장</button>
+    <button type="submit">
+        {% if record %}수정 완료{% else %}저장{% endif %}
+    </button>
 </form>
 
 <a href="{% url 'record_list' %}">목록으로</a>
