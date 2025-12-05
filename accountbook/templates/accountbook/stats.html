@@ -1,39 +1,125 @@
 <h1>카테고리별 통계</h1>
 
-<h2>수입 통계</h2>
-<table border="1" cellpadding="8">
-    <tr>
-        <th>카테고리</th>
-        <th>총 금액</th>
-    </tr>
-    {% for item in income_stats %}
-    <tr>
-        <td>{{ item.category }}</td>
-        <td style="color:blue;">+{{ item.total }}원</td>
-    </tr>
-    {% empty %}
-    <tr><td colspan="2">수입 기록이 없습니다.</td></tr>
-    {% endfor %}
-</table>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
-<br>
+<style>
+    .row {
+        display: flex;
+        gap: 40px;
+        margin-bottom: 40px;
+        flex-wrap: wrap;
+    }
 
-<h2>지출 통계</h2>
-<table border="1" cellpadding="8">
-    <tr>
-        <th>카테고리</th>
-        <th>총 금액</th>
-    </tr>
-    {% for item in expense_stats %}
-    <tr>
-        <td>{{ item.category }}</td>
-        <td style="color:red;">-{{ item.total }}원</td>
-    </tr>
-    {% empty %}
-    <tr><td colspan="2">지출 기록이 없습니다.</td></tr>
-    {% endfor %}
-</table>
+    .box {
+        flex: 1;
+        min-width: 300px;
+    }
 
-<hr>
+    canvas {
+        max-width: 280px;
+        max-height: 280px;
+        margin-top: 20px;
+    }
 
-<a href="{% url 'record_list' %}">← 기록 목록으로 돌아가기</a>
+    table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 10px;
+    }
+
+    th, td {
+        border: 1px solid #ddd;
+        padding: 8px;
+        text-align: center;
+    }
+
+    th {
+        background: #f7f7f7;
+    }
+</style>
+
+
+<div class="row">
+
+    <div class="box">
+        <h2>수입 통계</h2>
+        <table>
+            <tr><th>카테고리</th><th>총 금액</th></tr>
+
+            {% for i in income_stats %}
+            <tr>
+                <td>{{ i.category }}</td>
+                <td style="color:blue;">+{{ i.total }}원</td>
+            </tr>
+            {% empty %}
+            <tr><td colspan="2">기록 없음</td></tr>
+            {% endfor %}
+        </table>
+    </div>
+
+    <div class="box">
+        <h2>지출 통계</h2>
+        <table>
+            <tr><th>카테고리</th><th>총 금액</th></tr>
+
+            {% for e in expense_stats %}
+            <tr>
+                <td>{{ e.category }}</td>
+                <td style="color:red;">-{{ e.total }}원</td>
+            </tr>
+            {% empty %}
+            <tr><td colspan="2">기록 없음</td></tr>
+            {% endfor %}
+        </table>
+    </div>
+
+</div>
+
+
+<div class="row">
+
+    <div class="box">
+        <h2>수입 그래프</h2>
+        <canvas id="incomeChart"></canvas>
+    </div>
+
+    <div class="box">
+        <h2>지출 그래프</h2>
+        <canvas id="expenseChart"></canvas>
+    </div>
+
+</div>
+
+
+<a href="{% url 'record_list' %}">← 기록 목록으로</a>
+
+
+<script>
+    const incomeLabels = [{% for i in income_stats %}"{{ i.category }}",{% endfor %}];
+    const incomeData   = [{% for i in income_stats %}{{ i.total }},{% endfor %}];
+
+    const expenseLabels = [{% for e in expense_stats %}"{{ e.category }}",{% endfor %}];
+    const expenseData   = [{% for e in expense_stats %}{{ e.total }},{% endfor %}];
+
+    new Chart(document.getElementById('incomeChart'), {
+        type: 'pie',
+        data: {
+            labels: incomeLabels,
+            datasets: [{
+                data: incomeData,
+                backgroundColor: ['#4CAF50','#66BB6A','#81C784','#A5D6A7','#C8E6C9']
+            }]
+        }
+    });
+
+    new Chart(document.getElementById('expenseChart'), {
+        type: 'pie',
+        data: {
+            labels: expenseLabels,
+            datasets: [{
+                data: expenseData,
+                backgroundColor: ['#E53935','#EF5350','#E57373','#EF9A9A','#FFCDD2']
+            }]
+        }
+    });
+</script>
