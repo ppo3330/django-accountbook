@@ -24,8 +24,8 @@ Django로 만든 개인 가계부 웹 서비스입니다.
 ---
 
 # account-book 미리보기
-![list 미리보기](account_project/account_capture_1.PNG)
-![stats 미리보기](account_project/account_capture_2.PNG)
+![list 미리보기](https://github.com/ppo3330/django-accountbook/blob/master/account_capture_1.PNG)
+![stats 미리보기](https://github.com/ppo3330/django-accountbook/blob/master/account_capture_2.PNG)
 
 ---
 
